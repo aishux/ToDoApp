@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>ToDo App</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link href="{{ url_for('static', filename='/css/styles.css') }}" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="todolist not-done">
+             <h1>Todos</h1>
+
+                <form action="{{ url_for('add') }}" method="POST">
+                <input type="text" class="form-control add-todo" placeholder="Add todo" name="todoitem">
+                </form>
+
+                <button id="checkAll" class="btn btn-success"><a style="color: white;" href="/completeAll">Mark all as done</a></button>
+
+                    <ul id="sortable" class="list-unstyled">
+                    <li class="ui-state-default">
+                    <div class="checkbox">
+                    {% for todo in incomplete %}
+                        <li>{{ todo.text }}<button class="remove-item btn btn-default btn-xs pull-right"><a style="color: black;" href="{{ url_for('complete', id=todo.id) }}">✓</a></button></li> 
+                        <hr>
+                     {% endfor %} 
+                  
+
+                <div class="todo-footer">
+                    <strong><span class="count-todos"></span></strong> Items Left
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="todolist">
+             <h1>Already Done</h1>
+                <ul id="done-items" class="list-unstyled">
+                
+                    {% for todo in complete %}
+                    <li>{{ todo.text }}<button class="remove-item btn btn-default btn-xs pull-right"><a style="color: black;" href="{{ url_for('delete', id=todo.id) }}"><span class="glyphicon glyphicon-remove"></span></a></button></li>
+                    {% endfor %}
+
+                    <button id="checkAll" class="btn btn-success"><a style="color: white;" href="/deleteAll">Delete All</a></button>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
